@@ -1,6 +1,7 @@
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { Carousel, type Slide } from '../components/Carousel';
 import { Crest, teamDisplayName } from '../components/Crest';
+import { useFlipList } from '../components/useFlipList';
 import { matchWinner } from '../domain/bracket';
 import { computeStandings } from '../domain/standings';
 import { champion, findMatch, isGroupComplete, koStageName, nextMatch, playerById } from '../domain/tournament';
@@ -54,6 +55,9 @@ export function Dashboard() {
 function Standings({ state }: { state: TournamentState }) {
   const rows = computeStandings(state.players, state.groupMatches);
   const q = state.qualifiers ?? 0;
+  const body = useRef<HTMLTableSectionElement>(null);
+  // ao finalizar uma partida, cada linha desliza até a nova posição
+  useFlipList(body);
   return (
     <div className="table-wrap">
       <table className="standings">
@@ -71,9 +75,14 @@ function Standings({ state }: { state: TournamentState }) {
             <th title="Pontos" className="pts">Pts</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody ref={body}>
           {rows.map((r, i) => (
-            <tr key={r.player.id} className={i < q ? 'is-qualified' : ''}>
+            <tr
+              key={r.player.id}
+              className={i < q ? 'is-qualified' : ''}
+              data-flip-key={r.player.id}
+              data-flip-value={`${r.played}|${r.points}|${r.goalDiff}`}
+            >
               <td className="num pos">{i + 1}</td>
               <td className="left">
                 <div className="standings__player">

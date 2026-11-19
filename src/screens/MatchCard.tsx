@@ -163,7 +163,7 @@ function Stepper({ value, onChange, disabled, small, label, className = '' }: St
       <button className="stepper__btn" disabled={disabled || value >= MAX_GOALS} onClick={() => onChange(value + 1)} aria-label={`Mais um gol para ${label}`}>
         <ChevronUp size={small ? 22 : 34} />
       </button>
-      <output className="stepper__value" aria-live="polite">{value}</output>
+      <output key={value} className="stepper__value" aria-live="polite">{value}</output>
       <button className="stepper__btn" disabled={disabled || value <= 0} onClick={() => onChange(value - 1)} aria-label={`Menos um gol para ${label}`}>
         <ChevronDown size={small ? 22 : 34} />
       </button>

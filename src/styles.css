@@ -1480,6 +1480,162 @@ code,
   margin-right: 6px;
 }
 
+/* Reordenação animada (useFlipList): a linha desliza até a nova posição.
+   Linhas em movimento ganham fundo opaco para não "vazarem" umas sobre as outras. */
+.standings tr.flip-up,
+.standings tr.flip-down,
+.standings tr.flip-shift {
+  position: relative;
+}
+
+.standings tr.flip-shift td:not(.pos) {
+  background: var(--c-surface);
+}
+
+.standings tr.flip-up {
+  z-index: 2; /* quem sobe passa por cima */
+}
+
+.standings tr.flip-down {
+  z-index: 1;
+}
+
+.standings tr.flip-up td:not(.pos) {
+  animation: row-up 1.6s ease-out;
+}
+
+.standings tr.flip-down td:not(.pos) {
+  animation: row-down 1.6s ease-out;
+}
+
+.standings tr.flip-changed:not(.flip-up):not(.flip-down) td:not(.pos) {
+  animation: row-touched 1.4s ease-out;
+}
+
+.standings tr.flip-changed .pts {
+  animation: pts-flash 1.4s ease-out;
+}
+
+.standings tr.flip-up .pos,
+.standings tr.flip-down .pos,
+.standings tr.flip-shift .pos {
+  animation: pos-swap 0.7s ease-out;
+}
+
+@keyframes row-up {
+  0%,
+  45% {
+    background: color-mix(in srgb, var(--c-accent) 24%, var(--c-surface));
+  }
+  100% {
+    background: var(--c-surface);
+  }
+}
+
+@keyframes row-down {
+  0%,
+  45% {
+    background: color-mix(in srgb, var(--c-danger) 16%, var(--c-surface));
+  }
+  100% {
+    background: var(--c-surface);
+  }
+}
+
+@keyframes row-touched {
+  0%,
+  40% {
+    background: var(--c-surface-alt);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes pts-flash {
+  0%,
+  50% {
+    color: var(--c-accent-text);
+    text-shadow: 0 0 0.6em color-mix(in srgb, var(--c-accent) 60%, transparent);
+  }
+  100% {
+    color: inherit;
+    text-shadow: none;
+  }
+}
+
+@keyframes pos-swap {
+  0% {
+    color: transparent;
+  }
+  60% {
+    color: transparent;
+  }
+}
+
+/* Troca de partida no card do topo: lados entram pelas laterais, placar sobe. */
+.match-card__label {
+  animation: label-wipe 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.match-card__body > .side--left {
+  animation: side-in-left 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.match-card__body > .side--right {
+  animation: side-in-right 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.match-card__sa,
+.match-card__sb,
+.match-card__x,
+.champion__body,
+.qualified {
+  animation: rise-in 420ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* cada gol: o número "cai" no lugar */
+.stepper__value {
+  animation: score-tick 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes label-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes side-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+}
+
+@keyframes side-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes score-tick {
+  from {
+    opacity: 0.2;
+    transform: translateY(-14%);
+  }
+}
+
 /* ------------------------------------------------------------------ jogos */
 
 .games {
