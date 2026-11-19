@@ -1,5 +1,6 @@
 import { useConfirm } from '../components/Confirm';
 import { Crest, teamDisplayName } from '../components/Crest';
+import { Expand } from '../components/Expand';
 import { ChevronDown, ChevronUp } from '../components/Icons';
 import { matchWinner, stageName } from '../domain/bracket';
 import { computeStandings } from '../domain/standings';
@@ -98,7 +99,8 @@ export function MatchCard({ match, selected, onBack }: Props) {
         <Side player={b} align="right" winner={!!winner && winner === b?.id} />
       </div>
 
-      {showPens && draft.pens && (
+      <Expand open={showPens && !!draft.pens} className="pens-expand">
+        {draft.pens && (
         <div className="pens">
           <span className="pens__label">Pênaltis</span>
           <div className="pens__row">
@@ -108,7 +110,8 @@ export function MatchCard({ match, selected, onBack }: Props) {
           </div>
           {draft.pens.a === draft.pens.b && <span className="muted small">Os pênaltis precisam ter um vencedor</span>}
         </div>
-      )}
+        )}
+      </Expand>
 
       <div className="match-card__actions">
         {locked ? (

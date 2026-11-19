@@ -1594,6 +1594,49 @@ code,
   animation: rise-in 420ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Expand: altura 0 → natural (grid 0fr → 1fr), sem medir o conteúdo */
+.expand {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.expand.is-open {
+  animation: expand-open 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.expand.is-closing {
+  animation: expand-close 320ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  pointer-events: none;
+}
+
+.expand__clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@keyframes expand-open {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+@keyframes expand-close {
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+/* pênaltis: depois de abrir, rótulo e contadores entram em sequência */
+.pens-expand.is-open .pens__label {
+  animation: rise-in 360ms 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pens-expand.is-open .pens__row {
+  animation: rise-in 360ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* cada gol: o número "cai" no lugar */
 .stepper__value {
   animation: score-tick 220ms cubic-bezier(0.22, 1, 0.36, 1);
