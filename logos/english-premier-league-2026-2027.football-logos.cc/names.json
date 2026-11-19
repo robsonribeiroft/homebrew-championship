@@ -1,0 +1,9 @@
+{
+  "league": "Premier League",
+  "teams": {
+    "brighton": "Brighton & Hove Albion",
+    "ipswich": "Ipswich Town",
+    "newcastle": "Newcastle United",
+    "tottenham": "Tottenham Hotspur"
+  }
+}
