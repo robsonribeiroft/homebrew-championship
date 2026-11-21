@@ -81,7 +81,7 @@ export function Header({ theme, onToggleTheme, onNotice }: Props) {
     <header className="topbar">
       <div className="brand">
         <span className="brand__mark">FIFA</span>
-        <span className="brand__name">Campeonato Caseiro</span>
+        <span className="brand__name">Fifinha Championship</span>
       </div>
       <div className="topbar__right">
         <span className="tag tag--phase">{phaseLabel(state)}</span>
